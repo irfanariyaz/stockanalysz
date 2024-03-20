@@ -1,8 +1,10 @@
 package com.example.Stocker.Service;
 
 import com.example.Stocker.Repository.PortfolioRepository;
+import com.example.Stocker.Repository.StockRepository;
 import com.example.Stocker.Repository.UserRepository;
 import com.example.Stocker.model.Portfolio;
+import com.example.Stocker.model.Stock;
 import com.example.Stocker.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ public class PortfolioService {
     PortfolioRepository portfolioRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    StockRepository stockRepository;
 
     public User addNewPortfolio(Long id, String name) {
         Portfolio portfolio = new Portfolio();
@@ -46,5 +50,15 @@ public class PortfolioService {
     }
     public Portfolio findById(long id){
         return portfolioRepository.findById(id).orElseThrow(() -> new RuntimeException("Portfolio not found"));
+    }
+
+    public User deletestock(long stockId, long portfolioId) {
+        // get the portfolio and delete the stock
+        Portfolio portfolio = portfolioRepository.findById(portfolioId).get();
+        Stock  stock = stockRepository.findById(stockId).get();
+        portfolio.getStocks().remove(stock);
+        portfolioRepository.save(portfolio);
+        System.out.println("removed stock from the portfolio");
+        return portfolio.getUser();
     }
 }

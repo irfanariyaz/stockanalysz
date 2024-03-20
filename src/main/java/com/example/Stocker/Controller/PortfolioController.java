@@ -6,10 +6,7 @@ import com.example.Stocker.model.Portfolio;
 import com.example.Stocker.model.Stock;
 import com.example.Stocker.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.Set;
@@ -30,22 +27,24 @@ public class PortfolioController {
     }
     //add a stock to a portfolio
     @PostMapping("/addStock/{stock_id}/{portfolio_id}")
-    public User addStockToPortfolio(@PathVariable long stock_id, @PathVariable long portfolio_id){
+    public User addStockToPortfolio(@PathVariable long stock_id, @PathVariable long portfolio_id) {
         System.out.println("got the request to add a stock to portfolio");
         //get the portfolio with the id
         Portfolio portfolio = portfolioService.findById(portfolio_id);
         Stock stock = stockRepository.findById(stock_id).orElseThrow(() -> new RuntimeException("Stock not found"));
-
 // Add the stock to the portfolio
         portfolio.getStocks().add(stock);
         stock.getPortfolios().add(portfolio);
-
 // Save the changes
         portfolioService.save(portfolio);
+        return portfolio.getUser();
+    }
+    @DeleteMapping("/delete/stock/{stock_id}/{portfolio_id}")
+    public  User deleteStock(@PathVariable  long stock_id,@PathVariable long portfolio_id){
+        return portfolioService.deletestock(stock_id,portfolio_id);
 
 
-            return portfolio.getUser();
-        }
+    }
 
 
     }
