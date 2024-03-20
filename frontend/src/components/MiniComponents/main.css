@@ -1,0 +1,113 @@
+*, *::before, *::after { box-sizing: border-box; }
+hr,ul{
+    margin: 0;
+    padding: 0;
+}
+.company_container,.portfolio_container{
+    padding: 1rem;
+    border: 1px solid #e3dcdc;
+    border-radius: 5px;
+    margin: 1rem;
+}
+.data-options{
+    list-style: none;
+    display: flex;
+    flex-flow: wrap;
+}
+.data-options >li{
+    width: 150px;
+    text-align: center;
+    padding: 10px ;
+    border-right: 1px solid #e3dcdc;
+}
+.data-options >li:hover {
+    background: rgba(213, 231, 248, 0.48);
+}
+.company-details{
+    display: flex;
+    margin-top: 10px;
+    flex-wrap: wrap;
+
+}
+.company-details-left,
+.company-details-right{
+
+        flex: 1;
+        padding: 10px;
+}
+.company-details-left >p,
+.company-details-right>p
+{
+    border-bottom: 1px solid #e3dcdc;
+    /*background: yellow;*/
+    padding:  .8rem;
+    margin: 0;
+    font-size: 15px;
+}
+.company-details-left >p:hover,
+.company-details-right>p:hover {
+    background: rgba(213, 231, 248, 0.48);
+
+}
+.company-details-left >p>span,
+.company-details-right>p>span{
+    font-weight: 500;
+    float: right;
+}
+.company-details-right{
+    /*background: blue;*/
+}
+.company_header{
+    width: 50%;
+}
+.divider {
+    border-left: 1px solid #ccc;
+    /*height: 100%; !* Ensures the line spans the height of the container *!*/
+    background: #030909;
+}
+.analysis{
+    width: 250px;
+    height: 250px;
+    background:rgba(213, 231, 248, 0.48) ;
+}
+.negative{
+    color: red;
+    font-size:1.5rem;
+}
+.positive{
+    color: green;
+    font-size: 1.5rem;
+}
+/*.arrow_icon{*/
+/*    font-size: 16px;*/
+/*}*/
+.portfolio_modal{
+    /*border:  solid 1px red;*/
+    width: 50%;
+    padding: 1rem;
+}
+.modal-input{
+padding: 10px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+/*portfolio modal component*/
+.overlay{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: fixed;
+    background: rgba(20, 30, 48, 0.15);
+}
+.modal-content{
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    max-width: 600px;
+    padding: 14px 28px;
+    border-radius: 5px;
+
+}
