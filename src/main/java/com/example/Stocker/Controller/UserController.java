@@ -3,6 +3,7 @@ package com.example.Stocker.Controller;
 import com.example.Stocker.Service.UserService;
 import com.example.Stocker.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+
     @PostMapping("/users")
     public String createUser(@RequestParam("image")MultipartFile file,
                                              @RequestParam("username") String username,

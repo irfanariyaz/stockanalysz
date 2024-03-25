@@ -61,4 +61,22 @@ public class PortfolioService {
         System.out.println("removed stock from the portfolio");
         return portfolio.getUser();
     }
+
+    public User updatePortfolio(long portfolioId,String name) {
+        Portfolio portfolio = portfolioRepository.findById(portfolioId).get();
+        portfolio.setName(name);
+        portfolioRepository.save(portfolio);
+
+        return portfolioRepository.findById(portfolioId).get().getUser();
+    }
+
+    public User deletePortfolio(long portfolioId,long userId) {
+        //get the user
+        User user = userRepository.findById(userId).get();
+        Portfolio portfolio = portfolioRepository.findById(portfolioId).get();
+        user.getPortfolios().remove(portfolio);
+        userRepository.save(user);
+        return user;
+
+    }
 }

@@ -26,7 +26,7 @@ public class PortfolioController {
         return portfolioService.addNewPortfolio(id, name);
     }
     //add a stock to a portfolio
-    @PostMapping("/addStock/{stock_id}/{portfolio_id}")
+    @PostMapping("/addStock/portfolio/{stock_id}/{portfolio_id}")
     public User addStockToPortfolio(@PathVariable long stock_id, @PathVariable long portfolio_id) {
         System.out.println("got the request to add a stock to portfolio");
         //get the portfolio with the id
@@ -39,13 +39,24 @@ public class PortfolioController {
         portfolioService.save(portfolio);
         return portfolio.getUser();
     }
-    @DeleteMapping("/delete/stock/{stock_id}/{portfolio_id}")
+    //delete a stock from a portfolio
+    @DeleteMapping("/delete/portfolioStock/{stock_id}/{portfolio_id}")
     public  User deleteStock(@PathVariable  long stock_id,@PathVariable long portfolio_id){
         return portfolioService.deletestock(stock_id,portfolio_id);
 
 
     }
-
+    @PutMapping("/update/Portfolio")
+    public User updatePortfolio(@RequestParam("id") long portfolio_id,
+                                     @RequestParam("name")String name){
+        System.out.println("request to update reached"+ portfolio_id  +name);
+        return  portfolioService.updatePortfolio(portfolio_id,name);
+    }
+    //delete the portfolio
+    @DeleteMapping("/delete/{user_id}/{portfolio_id}")
+    public User deletePortfolio(@PathVariable long portfolio_id,@PathVariable long user_id) {
+        return portfolioService.deletePortfolio(portfolio_id,user_id);
+    }
 
     }
 

@@ -18,7 +18,7 @@ public class Portfolio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(unique = true)
+
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)

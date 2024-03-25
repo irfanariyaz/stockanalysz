@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+//@ToString
 public class Stock   {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,7 +114,8 @@ public class Stock   {
     private String changePrice;
 
     private String changePercent;
-
+    private  String previousClose;
+    private  String open;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "stocks" )
@@ -122,4 +124,11 @@ public class Stock   {
     @JsonIgnore
     @ManyToMany(mappedBy = "stocks")
     private Set<Wishlist> wishlists;
+
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "stock")
+//    private  Income income;
+//    @JsonIgnore
+    @OneToMany(mappedBy = "stock")
+    private Set<AnnualReport> annualReports;
 }
