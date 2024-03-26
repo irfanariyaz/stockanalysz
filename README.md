@@ -1,66 +1,66 @@
-Stock Analysis Web Application
-This is a full-stack web application for stock analysis. It provides users with the ability to view stock information,
-perform analysis, and track their investment portfolios.
+# Stock Analysis Web Application
 
-Technologies Used
-Backend:
+This is a full-stack web application for stock analysis. It provides users with the ability to view stock information, perform analysis, and track their investment portfolios.
 
-Java
-Spring Boot
-Spring Data JPA
-Spring Security
-PostgreSQL (or your preferred database)
-Maven (or Gradle)
-Frontend:
+## Features
 
-JavaScript
-React.js
-React Router
-Axios (for API requests)
-Bootstrap (or your preferred CSS framework)
-Getting Started
-Prerequisites
-Java Development Kit (JDK) installed
-Node.js and npm (Node Package Manager) installed
-Backend Setup
-Clone this repository:
+- **View Stock Information**: Users can search for stocks and view detailed information such as current price, historical data, and company information.
 
-bash
-Copy code
-git clone https://github.com/your-username/stock-analysis-app.git
-Navigate to the backend directory:
+- **Perform Analysis**: Users can perform various types of analysis on stocks.
 
-bash
-Copy code
-cd stock-analysis-app/backend
-Configure your database connection in src/main/resources/application.properties.
+- **Track Portfolios**: Users can create and manage their investment portfolios, track portfolio performances.
 
-Run the backend Spring Boot application:
+- **Visual Representation**: Users can easily analyze key metrics, identify trends, and make informed investment decisions using bar charts and Pie charts.
 
-bash
-Copy code
-./mvnw spring-boot:run
-The backend will start running on http://localhost:8080.
 
-Frontend Setup
-Navigate to the frontend directory:
+## Technologies Used
 
-bash
-Copy code
-cd ../frontend
-Install dependencies:
+### Backend:
 
-bash
-Copy code
-npm install
-Start the React development server:
+- Java Spring Boot
+- Spring Data JPA
+- MySql 
+- Maven 
 
-bash
-Copy code
-npm start
+### Frontend:
+
+- JavaScript
+- React.js
+- React Router
+- Axios (for API requests)
+- Bootstrap (or your preferred CSS framework)
+- React-chartjs-2(for displaying charts)
+
+## Getting Started
+
+### Prerequisites
+
+- Java Development Kit (JDK) installed
+- Node.js and npm (Node Package Manager) installed
+
+### Backend Setup
+
+1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/irfanariyaz/stockanalysz.git
+2. Configure your database connection in src/main/resources/application.properties.
+3. Run the backend Spring Boot application.
+
+### Frontend Setup
+1. Navigate to the frontend directory:
+    ```bash
+   cd ../frontend
+2. Install dependencies:
+    ```bash
+    npm install
+3. tart the React development server:
+    ```bash
+    npm start
 The frontend will start running on http://localhost:3000.
 
-Usage
-Open your web browser and navigate to http://localhost:3000 to access the web application.
-Sign up or log in to your account.
-Explore the available features such as viewing stock information, performing analysis, and managing your investment portfolio.
+### Usage
+
+- Open your web browser and navigate to http://localhost:3000 to access the web application.
+- Sign up or log in to your account.
+- Explore the available features such as viewing stock information, performing analysis, and managing your investment portfolio.
