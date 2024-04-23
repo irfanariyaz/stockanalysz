@@ -3,31 +3,56 @@ import "./main.css"
 import {useGlobalContext} from "../../Context/UserContext";
 import { BsArrowUp } from "react-icons/bs";
 import { BsArrowDown } from "react-icons/bs";
-import PortfolioModal from "../Modal/PortfolioModal";
 import button from "bootstrap/js/src/button";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import DoughnutChart from "./DoughnutChart";
+import Overview from  "./Overview"
+import LineChart from "./LineChart";
+import DoughnutChart1 from "./test";
+import BarGraph from "./BarGraph";
+
+// ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Company() {
     const {companyDetails,userisPresent,user,setUser}=useGlobalContext();
-    // const [modalPort,setModalPort] = useState(false);
-    console.log("companyDetails is set",companyDetails);
 
-    console.log(userisPresent,user)
+    const options={};
+
+    //console.log("checking if int",UserData.map((data) => data.value));
+    const navigate = useNavigate()
     const addtoPortfolio = (portfolioId)=>{
         const stock_id = companyDetails?.id;
-        axios.post(`http://localhost:8080/api/addStock/${stock_id}/${portfolioId}`)
+        axios.post(`http://localhost:8080/api/addStock/portfolio/${stock_id}/${portfolioId}`)
             .then((res)=>{
                 console.log("response after adding the stock to the portfolio",res.data)
                 setUser(res.data)
-                // navigate("/portfolio");
+                navigate("/portfolio")
+                console.log("Navigate to portfolio")
             })
             .catch((e)=>
             console.log("ERROR",e))
     }
+    const addtoWishlist = (wishlistId)=>{
+        const stock_id = companyDetails?.id;
+        axios.post(`http://localhost:8080/api/addStock/wishlist/${stock_id}/${wishlistId}`)
+            .then((res)=>{
+                console.log("response after adding the stock to the wishlist",res.data)
+                setUser(res.data)
+                navigate("/wishlist")
+                console.log("Navigate to wishlist")
+            })
+            .catch((e)=>
+                console.log("ERROR",e))
+    }
 
     if(!companyDetails){
-        return <p>Loading</p>
-    }else
+        return <Overview
+            userisPresent = {userisPresent}/>
+    }else if(companyDetails.Symbol === null) {
+        return <p>no such symbol/limit exceeded</p>
+    }
+    else
     {
         return (
             <div className="company_container">
@@ -60,7 +85,7 @@ function Company() {
                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 {userisPresent && (user?.wishlists.map((wishlist) => {
                                     return <li key={wishlist.id}><a className="dropdown-item"
-                                                                     href="#">{wishlist.name}</a></li>
+                                                                    href="#" onClick={()=>addtoWishlist(wishlist.id)}>{wishlist.name}</a></li>
 
                                 }))}
                             </ul>
@@ -90,7 +115,7 @@ function Company() {
                         <div className="company-details-left">
                             <p>EPS <span>{companyDetails.EPS}</span></p>
                             <p>PE Ratio <span>{companyDetails.PERatio}</span></p>
-                            <p>Market Cap <span>{companyDetails.MarketCapitalization}</span></p>
+                            <p>Market Cap <span>{parseFloat(companyDetails.MarketCapitalization/ 1000000000).toFixed(2)}B</span></p>
                             <p>Book Value <span>{companyDetails.BookValue}</span></p>
                             <p>Target Price <span>{companyDetails.AnalystTargetPrice}</span></p>
                             <p>Forward PE <span>8.15</span></p>
@@ -99,20 +124,32 @@ function Company() {
                         </div>
                         <div className="divider"></div>
                         <div className="company-details-right">
-                            <p>Asset type <span>8.15</span></p>
+                            <p>Open <span>{parseFloat(companyDetails.open).toFixed(2)}</span></p>
+                            <p>Previous close <span>{parseFloat(companyDetails.previousClose).toFixed(2)}</span></p>
                             <p>Sector <span>{companyDetails.Sector}</span></p>
                             <p>Industry <span>{companyDetails.Industry}</span></p>
                             <p> Beta<span>{companyDetails.Beta}</span></p>
                             <p>FiscalYearEnd <span>{companyDetails.FiscalYearEnd}</span></p>
                             <p>ExDivident Date <span>{companyDetails.ExDividendDate}</span></p>
-                            <p>Address <span>{companyDetails.Address}</span></p>
+                            {/*<p>Address <span>{companyDetails.Address}</span></p>*/}
                         </div>
                         <div className="divider"></div>
-                        <div className="">
-                            <div className="analysis"></div>
-                            <div className="analysis"></div>
+                        <div className="p-2">
+                            {/*{companyDetails.Symbol !=null &&*/}
+
+                            <BarGraph companyDetails={companyDetails}/>
+                            <hr/>
+                            <h4>Recommendations</h4>
+                            <DoughnutChart companyDetails={companyDetails}/>
+
+                            {/*<DoughnutChart1/>*/}
+
+                            {/*}*/}
+                            {/*    <div className="analysis"></div>*/}
                         </div>
+
                     </div>
+                    <LineChart />
 
                 </div>
             </div>

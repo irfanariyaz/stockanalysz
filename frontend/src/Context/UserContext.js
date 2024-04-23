@@ -7,7 +7,8 @@ export const UserProvider= ({children})=> {
     const [user, setUser] = useState({});
     const [email,setEmail]=useState(()=>{
         const storedUser = sessionStorage.getItem("useremail");
-        return storedUser ? JSON.parse(storedUser) : null;
+        console.log("storedUser",storedUser)
+        return storedUser ? JSON.parse(storedUser) : "";
 
     });
     const [search,setSearch] = useState("");
@@ -18,6 +19,9 @@ export const UserProvider= ({children})=> {
         sessionStorage.setItem('useremail', JSON.stringify(email));
 
     }, [email]);
+
+
+
 
     //updating a user
     const updateUser = (userData) => {

@@ -5,9 +5,11 @@ import axios from "axios";
 import button from "bootstrap/js/src/button";
 import PortfolioSummary from "./PortfolioSummary";
 import WishlistSummary from "./WishlistSummary";
+import {IoMdCloseCircleOutline} from "react-icons/io";
+import Overview from "./Overview";
 
 function WishlistTab(props) {
-    const [wishlistSelected,setwishlistSelected] = useState({});
+    const [wishlistSelected,setwishlistSelected] = useState(null);
     const [wishlistName,setWishlistName] = useState("");
     const [showmodel,setshowModel] = useState(false);
     const {userisPresent,user,setUser} = useGlobalContext();
@@ -16,9 +18,9 @@ function WishlistTab(props) {
         //get thr portfolio to display
         const wishlist = user?.wishlists.filter((wishlist)=>wishlist.name === wishlistName );
         setwishlistSelected(wishlist[0]);
-        console.log("wishlistName,wishlistSelected",wishlistName,wishlistSelected)
+       // console.log("wishlistName,wishlistSelected",wishlistName,wishlistSelected)
     }
-    console.log("wishlist selected after rendering wishlist",wishlistSelected)
+  //  console.log("wishlist selected after rendering wishlist",wishlistSelected)
     const handleSubmit = (e)=>{
         e.preventDefault();
         //call backend api to create  the portfolio
@@ -34,61 +36,73 @@ function WishlistTab(props) {
         setshowModel(false)
 
     }
-    return (
-        <div className="portfolio_container">
-            {/*//portfolio buttons*/}
+    if(!userisPresent){
+        return <Overview
+            userisPresent={userisPresent}
+        message="Create an account to access Wishlist"/>
+    }else {
+        return (
+            <div className="portfolio_container">
+                {/*//portfolio buttons*/}
 
-            <div className="d-flex gap-5 mb-3">
-                {/*create a dropdown for portfolio selection*/}
-                <div className="dropdown">
-                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        Select Wishlist
+                <div className="d-flex gap-5 mb-3">
+                    {/*create a dropdown for wishlist selection*/}
+                    <div className="dropdown">
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            Select Wishlist
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            {userisPresent && (user?.wishlists.map((wishlist) => {
+                                return <li key={wishlist.id} onClick={() => handleSetPortfolio(wishlist.name)}><a
+                                    className="dropdown-item" href="#">{wishlist.name}</a></li>
+
+                            }))}
+                        </ul>
+                    </div>
+                    {/*// <-- Button trigger modal -->*/}
+                    <button type="button" className="btn btn-primary" onClick={() => setshowModel(true)}>
+                        Create new Wishlist
                     </button>
-                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        {userisPresent && (user?.wishlists.map((wishlist)=> {
-                            return <li  key={wishlist.id} onClick={()=>handleSetPortfolio(wishlist.name)}><a className="dropdown-item" href="#">{wishlist.name}</a></li>
 
-                        }))}
-                    </ul>
                 </div>
-                {/*// <-- Button trigger modal -->*/}
-                <button type="button" className="btn btn-primary"  onClick={()=>setshowModel(true)}>
-                    Create new Wishlist
-                </button>
+                <hr/>
+                {/*// <-- Modal to create new wishlist -->*/}
+                {showmodel && userisPresent &&
+                    <div className="portfolio_modal">
+                        <form onSubmit={handleSubmit}>
+                            <input className="modal-input" type="text" name="portfolio-name"
+                                   id="portfolio-name" value={wishlistName}
+                                   onChange={(e) => setWishlistName(e.target.value)}/>
+                            <button type="submit" className="btn btn-primary mx-4">Create</button>
+                            <button className="btn btn-danger" onClick={() => setshowModel(false)}>Cancel</button>
+
+                        </form>
+                    </div>
+                }
+                {/*if no user , show them to login*/}
+                {showmodel && !userisPresent &&
+                    <div>
+                        <p>Login to create a Wishlist</p>
+                        <Link to="/login">
+                            <button className="btn btn-primary">Login</button>
+                        </Link>
+                    </div>
+                }
+                {/*{Summary of portfolio}*/}
+                {wishlistSelected != null &&
+                    <div>
+                        <WishlistSummary
+                            wishlistSelected={wishlistSelected}
+                            setwishlistSelected={setwishlistSelected}
+                        />
+                    </div>
+                }
+
 
             </div>
-            <hr/>
-            {/*// <-- Modal -->*/}
-            {showmodel && userisPresent &&
-                <div className="portfolio_modal">
-                    <form onSubmit={handleSubmit}>
-                        <input className="modal-input" type="text" name="portfolio-name"
-                               id="portfolio-name" value={wishlistName}
-                               onChange={(e) => setWishlistName(e.target.value)}/>
-                        <button type="submit" className="btn btn-primary mx-4">Create</button>
-                    </form>
-                    <br/><hr/>
-                </div>
-            }
-            {/*if no user , show them to login*/}
-            {showmodel && !userisPresent &&
-                <div>
-                    <p>Login to create a Wishlist</p>
-                    <Link to="/login">
-                        <button className="btn btn-primary">Login</button>
-                    </Link>
-                </div>
-            }
-            {/*{Summary of portfolio}*/}
-            {wishlistSelected && <div>
-                <WishlistSummary
-                    wishlistSelected={wishlistSelected}/>
-            </div>}
-
-
-        </div>
-    );
+        );
+    }
 }
 
 export default WishlistTab;

@@ -16,19 +16,23 @@ function MainNavBar(props) {
         console.log("search symbol",search)
         const url =    `http://localhost:8080/api/stock/${search}`
       //  const url = `https://www.alphavantage.co/query?function=OVERVIEW&apikey=${apiKey}&symbol=${search}`
-        axios.get(url)
-            .then((res)=>{
-                console.log("result",res.data)
-                setCompanyDetails(res.data);
-                navigate("/user")
-            })
+        const response = axios.get(url);
+        response.then((res)=>{
+            setCompanyDetails(res.data);
+            console.log("result",res.data)
+            navigate("/user");
+        })
+        // console.log("data" +response.data)
+
+        // console.log("stock"+data)
+
 
     }
     const handlelogout = ()=>{
         setUser({});
         //set the session storage back to null
         sessionStorage.setItem("user","");
-        navigate("/user");
+        navigate("/");
 
     }
     const userisEmpty   = Object.keys(user).length;
@@ -36,7 +40,7 @@ function MainNavBar(props) {
     return (
         <nav className="main_navbar ">
             <div className="navbar-left">
-                <span className="navbar-brand">STOCKANALYST</span>
+                <span className="navbar-brand">STOCKANALYSZ</span>
                 <form className="search-form" onSubmit={handleSubmit}>
                     <input type="text" className="search-bar" name = "search" value={search} onChange={(e)=>setSearch(e.target.value)} placeholder="Search..."/>
                     <button type="submit" className="search-button"><IoSearch  style={{

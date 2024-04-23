@@ -14,13 +14,15 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import Wishlist from "./components/Wishlist";
+import DoughnutChart from "./components/MiniComponents/test";
+import Home from "./components/Home";
 
 
 function App() {
     const router = createBrowserRouter([
         {
             path:"/",
-            element: <Main/>
+            element: <Home/>
         },
         {
             path:"/login",
@@ -41,6 +43,10 @@ function App() {
         {
             path:"/wishlist",
             element: <Wishlist/>
+        },
+        {
+            path:"/test",
+            element:<DoughnutChart/>
         }
     ]);
   return (

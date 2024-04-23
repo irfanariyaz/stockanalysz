@@ -27,7 +27,7 @@ function Login() {
             .then((res)=>{
                 console.log("storing the email in the seession storage",res.data.email)
                 updateUser(res.data.email);
-                navigate(`/user`);
+                navigate(`/`);
             })
             .catch((e)=>{
                 console.log("ERR",e)

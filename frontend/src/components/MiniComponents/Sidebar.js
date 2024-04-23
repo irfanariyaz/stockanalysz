@@ -27,7 +27,7 @@ function Sidebar(props) {
             }
 
             <ul className="navigation">
-                <li><Link to="/user"><HiOutlineHome className="icons"/> Home</Link></li>
+                <li><Link to="/"><HiOutlineHome className="icons"/> Home</Link></li>
                 <li><Link to="/portfolio"><PiBriefcaseMetal className="icons"/>Portfolio</Link></li>
                 <li><Link to="/wishlist"><PiBriefcaseMetal className="icons"/>Wishlist</Link></li>
                 <li><a href="#"><PiBriefcaseMetal className="icons"/>Profile</a></li>
