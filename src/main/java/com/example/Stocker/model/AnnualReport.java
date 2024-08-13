@@ -30,4 +30,12 @@ public class AnnualReport {
     @JoinColumn(name = "stock_id")
     // @JsonIgnore
     private Stock stock;
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
 }

@@ -24,7 +24,7 @@ public class StockController {
         if(st.isPresent()){  //yes
             System.out.println("stock  in database");
             Stock stock = st.get();
-           //stock = stockService.getQuote(symbol,stock);
+           stock = stockService.getQuote(symbol,stock);
            stock = stockService.getFinancials(symbol,stock);
          //   System.out.println("stock in after saving ann rep "+stock.getAnnualReports());
             return stock;

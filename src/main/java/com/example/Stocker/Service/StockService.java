@@ -55,16 +55,15 @@ public class StockService {
         System.out.println("quote");
            ObjectMapper objectMapper = new ObjectMapper();
            JsonNode jsonNode = objectMapper.readTree(response);
-           JsonNode globalQuote = jsonNode.get( "Global Quote");
+           JsonNode globalQuote = jsonNode.path( "Global Quote");
            System.out.println("global quote  "+globalQuote+url);
            if(globalQuote!=null){
-               String price = globalQuote.get("05. price").asText();
+               String price = globalQuote.path("05. price").asText();
                System.out.println("price" +price);
-               System.out.println("price" +price);
-               String change = globalQuote.get("09. change").asText();
-               String changePercent = globalQuote.get("10. change percent").asText();
-               String open = globalQuote.get("02. open").asText();
-               String previousClose = globalQuote.get("08. previous close").asText();
+               String change = globalQuote.path("09. change").asText();
+               String changePercent = globalQuote.path("10. change percent").asText();
+               String open = globalQuote.path("02. open").asText();
+               String previousClose = globalQuote.path("08. previous close").asText();
                stock.setPrice(price);
                stock.setChangePrice(change);
                stock.setChangePercent(changePercent);

@@ -12,8 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "stocks")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 //@ToString
 public class Stock   {
@@ -128,7 +127,14 @@ public class Stock   {
 //    @JsonIgnore
 //    @OneToOne(mappedBy = "stock")
 //    private  Income income;
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "stock")
     private Set<AnnualReport> annualReports;
+
+
+
+
+
+
+
 }

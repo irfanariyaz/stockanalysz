@@ -14,7 +14,7 @@ function MainNavBar(props) {
         const apiKey = "6ZC3AWD8JBACSWN0";
         const symbol = search;
         console.log("search symbol",search)
-        const url =    `http://localhost:8080/api/stock/${search}`
+        const url =    `http://localhost:8080/api/stock/${search}`;
       //  const url = `https://www.alphavantage.co/query?function=OVERVIEW&apikey=${apiKey}&symbol=${search}`
         const response = axios.get(url);
         response.then((res)=>{
