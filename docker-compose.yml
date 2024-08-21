@@ -5,14 +5,14 @@ services:
     image: mysql:8.0
     container_name: mysql-container
     environment:
-      DATABASE_HOST: mysql
-      DATABASE_PORT: 3306
+#      DATABASE_HOST: mysql
+#      DATABASE_PORT: 3306
       MYSQL_DATABASE: Stock
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: root
+#      MYSQL_USER: admin
+#      MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3306:3306"
+      - "3307:3306"
 #    volumes:
 #      - mysql-data:/var/lib/mysql
 #    networks:
@@ -27,9 +27,13 @@ services:
     volumes:
       - images-volume:/app/public/images
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Stock?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: root
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Stock?createDatabaseIfNotExist=true
+#      SPRING_DATASOURCE_USERNAME: admin
+#      SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       - mysql
   react-app:
