@@ -1,5 +1,5 @@
 # Use an official Maven or Gradle image to build the application
-FROM maven:3.8.6-openjdk-17 AS build
+FROM maven:3.5.2-jdk-8-alpine  AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -24,7 +24,7 @@ COPY --from=build /app/target/Stocker-0.0.1-SNAPSHOT.jar /app/app.jar
 EXPOSE 8080
 
 # Run the Spring Boot application
-CMD ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
 
 
 #FROM openjdk:17-jdk-alpine
