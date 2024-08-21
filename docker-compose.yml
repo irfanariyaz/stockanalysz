@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      MYSQL_DATABASE: Stock
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+#    volumes:
+#      - mysql-data:/var/lib/mysql
+#    networks:
+#      - spring-mysql-network
+
+  app:
+    image: stockapi:latest
+    container_name: stockapi-container
+    ports:
+      - 8080:8080
+    volumes:
+      - images-volume:/app/public/images
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Stock?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - mysql
+  react-app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+    - "3000:80"
+    volumes:
+      - images-volume:/usr/share/nginx/html/images
+#    networks:
+#      - spring-mysql-network
+
+#networks:
+#  spring-mysql-network:
+#
+volumes:
+  images-volume:
+    driver: local

@@ -12,7 +12,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Table(name = "user")
 @Builder
 @AllArgsConstructor
@@ -25,13 +24,13 @@ public class User implements Serializable {
     @Column(unique = true)
     private String email;
 
-    @Column()
+    @Column(nullable = true)
     private String image;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", orphanRemoval = true,fetch = FetchType.LAZY)
     private Set<Portfolio> portfolios =new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private Set<Wishlist> wishlists;
 
     public User(String username, String password, String email) {

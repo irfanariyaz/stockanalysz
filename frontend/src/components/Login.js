@@ -5,8 +5,9 @@ import {useNavigate} from "react-router-dom";
 
 
 function Login() {
-    const {setUser,updateUser }= useGlobalContext();
+    const {updateUser }= useGlobalContext();
     const navigate = useNavigate()
+    const  formData = new FormData();
     const [login,setLogin ]=useState({
         email:"",
         password:""
@@ -18,20 +19,39 @@ function Login() {
                 [e.target.name]:e.target.value
             })
     }
-    const handleSubmit =(e)=>{
+    const handleSubmit =async(e)=>{
         e.preventDefault();
-        const  formData = new FormData();
-        formData.append("email",login.email);
-        formData.append("password",login.password);
-        axios.post("http://localhost:8080/api/user",formData)
-            .then((res)=>{
-                console.log("storing the email in the seession storage",res.data.email)
-                updateUser(res.data.email);
-                navigate(`/`);
-            })
-            .catch((e)=>{
-                console.log("ERR",e)
-            })
+//        const  formData = new FormData();
+//        formData.append("email",login.email);
+//        formData.append("password",login.password);
+//        console.log("formData",formData)
+            try{
+            const response = await axios.post("http://localhost:8080/api/user",login);
+            console.log("response from /user",response.data)
+            if(response.data.email){
+            updateUser(response.data.email);
+            navigate(`/`);
+
+            }
+            else if(response.data.message){
+            alert(response.data.message)
+            navigate(`/login`);
+            }else{
+            navigate(`/register`);
+            }
+
+            } catch (error) {
+                 console.error('Error during login:', error);
+               }
+//        axios.post("http://localhost:8080/api/user",login)
+//            .then((res)=>{
+//                console.log("storing the email in the seession storage",res.data.email)
+//                updateUser(res.data.email);
+//                navigate(`/`);
+//            })
+//            .catch((e)=>{
+//                console.log("ERR",e)
+//            })
     }
 
     return (

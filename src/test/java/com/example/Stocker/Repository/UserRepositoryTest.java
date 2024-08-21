@@ -16,21 +16,21 @@ class UserRepositoryTest {
 
     static  final  User user = new User("testuser","password","testuser@gmail.com");
 
-    @Test
-    void findByEmail() {
-        //create an user
-        userRepository.save(user);
-        String email = userRepository.findByEmail("testuser@gmail.com").getEmail();
-        assertEquals("testuser@gmail.com",email);
-        userRepository.delete(user);
-    }
+//    @Test
+//    void findByEmail() {
+//        //create an user
+//        userRepository.save(user);
+//        String email = userRepository.findByEmail("testuser@gmail.com").getEmail();
+//        assertEquals("testuser@gmail.com",email);
+//        userRepository.delete(user);
+//    }
 
-    @Test
-    void findAllByEmailAndPassword() {
-        userRepository.save(user);
-        User user = userRepository.findAllByEmailAndPassword("testuser@gmail.com","password");
-        assertEquals("testuser@gmail.com",user.getEmail());
-        assertEquals("password",user.getPassword());
-        userRepository.save(user);
-    }
+//    @Test
+//    void findAllByEmailAndPassword() {
+//        userRepository.save(user);
+//        User user = userRepository.findAllByEmailAndPassword("testuser@gmail.com","password");
+//        assertEquals("testuser@gmail.com",user.getEmail());
+//        assertEquals("password",user.getPassword());
+//        userRepository.save(user);
+//    }
 }

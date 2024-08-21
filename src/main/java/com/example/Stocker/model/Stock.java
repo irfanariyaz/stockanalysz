@@ -12,7 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "stocks")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 //@ToString
 public class Stock   {
@@ -117,11 +118,11 @@ public class Stock   {
     private  String open;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "stocks" )
+    @ManyToMany(mappedBy = "stocks",fetch = FetchType.LAZY)
     private Set<Portfolio> portfolios;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "stocks")
+    @ManyToMany(mappedBy = "stocks",fetch = FetchType.LAZY)
     private Set<Wishlist> wishlists;
 
 //    @JsonIgnore

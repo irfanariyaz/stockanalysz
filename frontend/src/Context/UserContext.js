@@ -6,14 +6,23 @@ export const UserProvider= ({children})=> {
 
     const [user, setUser] = useState({});
     const [email,setEmail]=useState(()=>{
-        const storedUser = sessionStorage.getItem("useremail");
-        console.log("storedUser",storedUser)
-        return storedUser ? JSON.parse(storedUser) : "";
-
+        let storedUser = sessionStorage.getItem("useremail");
+         if (storedUser !== "undefined" && storedUser !== null) {
+          try {
+            storedUser = JSON.parse(storedUser);
+          } catch (error) {
+            console.error('Error parsing JSON:', error);
+            storedUser = null; // You can handle this case as needed
+          }
+        } else {
+          storedUser = null; // Or handle undefined storedData as needed
+        }
+        return storedUser;
+console.log("user in context",email)
     });
-    const [search,setSearch] = useState("");
-    const [companyDetails, setCompanyDetails] = useState("");
-    const userisPresent = (Object.keys(user).length !== 0);
+        const [search,setSearch] = useState("");
+        const [companyDetails, setCompanyDetails] = useState("");
+        const userisPresent = (Object.keys(user).length !== 0);
     //when user is changed set session storage with new value;
     useEffect(() => {
         sessionStorage.setItem('useremail', JSON.stringify(email));
@@ -25,7 +34,8 @@ export const UserProvider= ({children})=> {
 
     //updating a user
     const updateUser = (userData) => {
-        setEmail(userData);
+        setEmail("");
+        setEmail(userData)
     };
 
     //get the user from the session storage
@@ -43,7 +53,8 @@ export const UserProvider= ({children})=> {
 
 
     return (
-        <UserContext.Provider value={{updateUser,user,setUser,search,setSearch,setCompanyDetails,companyDetails,userisPresent}}>
+        <UserContext.Provider value={{updateUser,user,setUser,search,setSearch,
+        setCompanyDetails,companyDetails,userisPresent}}>
             {children}
         </UserContext.Provider>
     )

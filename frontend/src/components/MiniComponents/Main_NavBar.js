@@ -31,7 +31,8 @@ function MainNavBar(props) {
     const handlelogout = ()=>{
         setUser({});
         //set the session storage back to null
-        sessionStorage.setItem("user","");
+        sessionStorage.setItem("user",JSON.stringify(""));
+        sessionStorage.setItem("useremail",JSON.stringify(""));
         navigate("/");
 
     }

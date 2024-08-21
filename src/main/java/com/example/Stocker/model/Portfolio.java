@@ -21,7 +21,7 @@ public class Portfolio {
 
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "portfolio_stock",
             joinColumns = @JoinColumn(name = "portfolio_id"),

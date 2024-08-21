@@ -7,6 +7,7 @@ import com.example.Stocker.model.User;
 import com.fasterxml.jackson.annotation.SimpleObjectIdResolver;
 import com.fasterxml.jackson.databind.util.NativeImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,20 +56,45 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User authenticate(String email, String password) {
-      return   userRepository.findAllByEmailAndPassword(email,password);
+    public User authenticate(User user) {
+       return  user = userRepository.findByEmail(user.getEmail());
+//        System.out.println("user"+userDb);
+//        if (userDb!=null){
+//            System.out.println("There is a user with this email");
+//            if(user.getPassword().equals(userDb.getPassword())){
+//                return  userDb;
+//            }
+//        }
+//
+//      return   user;
     }
-    public String uploadDir ="C:\\Users\\Learner_9ZH3Z187\\IdeaProjects\\capstone\\Stocker\\frontend\\public\\images";
+   // public String uploadDir ="C:\\Users\\Learner_9ZH3Z187\\IdeaProjects\\capstone\\Stocker\\frontend\\public\\images";
 
     public String uploadFile(MultipartFile file){
-        try {
-            Path copyLocation = Paths.get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
-            Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
-            String fileName = file.getOriginalFilename();
-            int filelength = file.getBytes().length;
-            System.out.println("File uploaded successfully, " + "file name is :: "+ fileName + " and length is ::" + filelength+"pat::h"+copyLocation.getFileName().toString());
-            return copyLocation.getFileName().toString();
-        }catch (IOException e){
+
+//        try {
+//            Path copyLocation = Paths.get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
+//            Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+//            String fileName = file.getOriginalFilename();
+//            int filelength = file.getBytes().length;
+//            System.out.println("File uploaded successfully, " + "file name is :: "+ fileName + " and length is ::" + filelength+"pat::h"+copyLocation.getFileName().toString());
+//            return copyLocation.getFileName().toString();
+//        }
+        try{
+            String fileName =  file.getOriginalFilename();
+            System.out.println("fileName:"+fileName);
+            //    @Value("${image.upload.dir}")
+            String uploadDir = "/app/public/images";
+            String filePath = uploadDir + File.separator + fileName;
+            System.out.println("filePath: "+filePath);
+
+            File destinationFile = new File(filePath);
+            System.out.println("Destinationfile"+destinationFile);
+            file.transferTo(destinationFile);
+            System.out.println("File uploaded successfully, " + "file name is :: "+ fileName + " and path is ::"+filePath+"Destination is "+destinationFile );
+            return  fileName;
+        }
+        catch (IOException e){
             e.printStackTrace();
             throw new FileStorageException("File not Found");
         }
