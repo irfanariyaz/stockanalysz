@@ -19,7 +19,8 @@ services:
 #      - spring-mysql-network
 
   app:
-    image: stockapi:latest
+    build: ./
+#    image: stockapi:latest
     container_name: stockapi-container
     ports:
       - 8080:8080
