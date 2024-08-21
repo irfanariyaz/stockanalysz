@@ -1,5 +1,5 @@
 # Use an official Maven or Gradle image to build the application
-FROM maven:3.5.2-jdk-8-alpine  AS build
+FROM maven:3.8.5-openjdk-17  AS build
 
 # Set the working directory inside the container
 WORKDIR /app
